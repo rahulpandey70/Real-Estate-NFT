@@ -16,6 +16,11 @@ contract Escrow {
         _;
     }
 
+    modifier onlyBuyer(uint256 _nftID) {
+        require(msg.sender == buyer[_nftID], "Only buyer can call this function");
+        _;
+    }
+
     mapping (uint256 => bool) public isListed;
     mapping (uint256 => uint256) public purchasePrice;
     mapping (uint256 => uint256) public escrowAmount;
@@ -45,5 +50,15 @@ contract Escrow {
         purchasePrice[_nftID] = _purchasePrice;
         buyer[_nftID] = _buyer;
         escrowAmount[_nftID] = _escrowAmount;
+    }
+
+    function depositEarnest(uint256 _nftID) public payable onlyBuyer(_nftID) {
+        require(msg.value == escrowAmount[_nftID]);
+    }
+
+    receive() external payable {}
+
+    function getBalance() public view returns(uint256) {
+        return address(this).balance;
     }
 }
