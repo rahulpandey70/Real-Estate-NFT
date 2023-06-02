@@ -18,6 +18,8 @@ function App() {
 	const [escrow, setEscrow] = useState(null);
 	const [account, setAccount] = useState(null);
 	const [homes, setHomes] = useState([]);
+	const [home, setHome] = useState({});
+	const [toggle, setToggle] = useState(false);
 
 	// connect to metamask
 	const loadBlockchainData = async () => {
@@ -59,6 +61,11 @@ function App() {
 		});
 	};
 
+	const togglePopUP = (home) => {
+		setHome(home);
+		toggle ? setToggle(false) : setToggle(true);
+	};
+
 	useEffect(() => {
 		loadBlockchainData();
 	}, []);
@@ -73,7 +80,7 @@ function App() {
 				<hr />
 				<div className="cards">
 					{homes.map((home, index) => (
-						<div className="card" key={index}>
+						<div className="card" key={index} onClick={() => togglePopUP(home)}>
 							<div className="card__image">
 								<img src={home.image} alt={home.image} />
 							</div>
@@ -90,6 +97,14 @@ function App() {
 					))}
 				</div>
 			</div>
+			{toggle && (
+				<Home
+					home={home}
+					provider={provider}
+					escrow={escrow}
+					togglePopUP={togglePopUP}
+				/>
+			)}
 		</div>
 	);
 }
