@@ -278,7 +278,7 @@ header {
   margin: 0 20px;
   padding-right: 40px;
 
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
 }
 
 .home__overview h1,
