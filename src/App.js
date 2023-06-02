@@ -100,6 +100,7 @@ function App() {
 			{toggle && (
 				<Home
 					home={home}
+					account={account}
 					provider={provider}
 					escrow={escrow}
 					togglePopUP={togglePopUP}
